@@ -169,6 +169,8 @@
     flex: 1; min-width: 180px; padding: 12px 16px; border-radius: 999px;
     border: 1px solid var(--line); background: transparent; color: var(--ink); font-size: 14px;
   }
+  .nl-msg { margin-top:14px; font-size:14px; font-weight:600; color:var(--flag-green); }
+  .nl-msg.nl-err { color:var(--flag-red); }
   .newsletter .demo-note { margin-top: 12px; font-size: 11px; color: var(--muted); }
 
   footer { border-top: 1px solid var(--line); padding: 32px 0; }
@@ -407,16 +409,25 @@
       <h3 class="serif" data-lang="it">Lettere dalla Sicilia</h3>
       <p data-lang="en">A short note when a new book is out. No spam, promesso.</p>
       <p data-lang="it">Un breve avviso quando esce un nuovo libro. Niente spam, promesso.</p>
-      <form onsubmit="return handleSubscribe(event)">
-        <input type="email" placeholder="Your email" data-lang="en" id="email-en" aria-label="Your email">
-        <input type="email" placeholder="La tua email" data-lang="it" id="email-it" aria-label="La tua email">
-        <button class="buy-btn" type="submit">
+      <form id="nl-form" action="https://assets.mailerlite.com/jsonp/2662082/forms/199646359466280121/subscribe" method="post" target="_blank" onsubmit="return handleSubscribe(event)">
+        <input type="email" name="fields[email]" id="nl-email" required autocomplete="email" placeholder="Your email" aria-label="Email">
+        <input type="hidden" name="ml-submit" value="1">
+        <input type="hidden" name="anticsrf" value="true">
+        <button class="buy-btn" type="submit" id="nl-btn">
           <span data-lang="en">Subscribe</span>
           <span data-lang="it">Iscriviti</span>
         </button>
       </form>
-      <div class="demo-note" data-lang="it">Modulo demo: da collegare a un servizio email vero prima del lancio pubblico.</div>
-      <div class="demo-note" data-lang="en">Demo form: connect a real email service before public launch.</div>
+      <div class="nl-msg" id="nl-ok" hidden>
+        <span data-lang="en">Grazie! Please check your inbox and confirm your subscription.</span>
+        <span data-lang="it">Grazie! Controlla la tua email e conferma l'iscrizione.</span>
+      </div>
+      <div class="nl-msg nl-err" id="nl-err" hidden>
+        <span data-lang="en">Something went wrong. Please try again, or write to ciao@salgiuliano.com.</span>
+        <span data-lang="it">Qualcosa non ha funzionato. Riprova, oppure scrivi a ciao@salgiuliano.com.</span>
+      </div>
+      <div class="demo-note" data-lang="en">You can unsubscribe with one click at any time.</div>
+      <div class="demo-note" data-lang="it">Puoi disiscriverti in qualsiasi momento con un clic.</div>
     </div>
   </div>
 </section>
@@ -456,17 +467,24 @@ function setLang(lang) {
   document.documentElement.lang = it ? 'it' : 'en';
   document.getElementById('btn-it').classList.toggle('active', it);
   document.getElementById('btn-en').classList.toggle('active', !it);
-  document.getElementById('email-it').required = it;
-  document.getElementById('email-en').required = !it;
+  document.getElementById('nl-email').placeholder = it ? 'La tua email' : 'Your email';
   try { localStorage.setItem('sg-lang', lang); } catch (e) {}
 }
 /* Inglese di default; l'italiano resta solo se il visitatore l'ha scelto */
 (function(){ var l = 'en'; try { l = localStorage.getItem('sg-lang') || 'en'; } catch (e) {} setLang(l); })();
 function handleSubscribe(e) {
   e.preventDefault();
-  var btn = e.target.querySelector('.buy-btn');
-  var lang = document.body.classList.contains('lang-it') ? 'it' : 'en';
-  btn.textContent = lang === 'en' ? 'Thank you!' : 'Grazie!';
+  var form = e.target, btn = document.getElementById('nl-btn');
+  var ok = document.getElementById('nl-ok'), err = document.getElementById('nl-err');
+  ok.hidden = true; err.hidden = true; btn.disabled = true; btn.style.opacity = '.6';
+  fetch(form.action, { method: 'POST', body: new FormData(form) })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (d && d.success) { form.hidden = true; ok.hidden = false; }
+      else { err.hidden = false; }
+    })
+    .catch(function () { err.hidden = false; })
+    .then(function () { btn.disabled = false; btn.style.opacity = ''; });
   return false;
 }
 /* ---- Anteprima: visualizzatore ---- */
