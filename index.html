@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sal Giuliano — Books from Sicily</title>
+<meta name="description" content="Books by Sal Giuliano, an author from Catania, Sicily. Picture books, puzzle books and practical organizers with a touch of Italy — available on Amazon worldwide.">
+<link rel="canonical" href="https://salgiuliano.com/">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sal Giuliano — Books from Sicily">
+<meta property="og:description" content="Stories and puzzle books written in Catania, Sicily. Available on Amazon worldwide.">
+<meta property="og:url" content="https://salgiuliano.com/">
+<meta property="og:image" content="https://salgiuliano.com/img/cover-brontolo.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF6F0;
+    --ink: #1A3C34;
+    --accent: #C17C60;
+    --card-bg: #FFFFFF;
+    --line: rgba(26,60,52,0.10);
+    --muted: rgba(26,60,52,0.65);
+    --flag-red: #CE2B37;
+    --flag-green: #009246;
+    --cover-bg: #F1EBE1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14201C;
+      --ink: #F3EEE6;
+      --accent: #D99A7E;
+      --card-bg: #1D2B26;
+      --line: rgba(243,238,230,0.12);
+      --muted: rgba(243,238,230,0.65);
+      --cover-bg: #22322C;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14201C;
+    --ink: #F3EEE6;
+    --accent: #D99A7E;
+    --card-bg: #1D2B26;
+    --line: rgba(243,238,230,0.12);
+    --muted: rgba(243,238,230,0.65);
+    --cover-bg: #22322C;
+  }
+  * { box-sizing: border-box; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+    height: 100%;
+  }
+  body {
+    margin: 0;
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .serif { font-family: 'Fraunces', serif; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+  header.top {
+    position: sticky; top: 0; z-index: 50;
+    padding-top: env(safe-area-inset-top, 0px);
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 0;
+  }
+  .tricolore { height:4px; background: linear-gradient(90deg, var(--flag-green) 0 33.33%, #F4F1EA 33.33% 66.66%, var(--flag-red) 66.66% 100%); }
+  .eyebrow { display:block; text-align:center; font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    color: var(--accent); font-size:16px; margin:0 0 4px; }
+  .eyebrow + .section-title { margin-top:0; }
+  .brand { font-size: 20px; font-weight: 600; letter-spacing: 0.2px; }
+  .langtoggle {
+    display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden;
+  }
+  .langtoggle button {
+    border: none; background: transparent; color: var(--ink);
+    padding: 6px 14px; font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer;
+  }
+  .langtoggle button.active { background: var(--ink); color: var(--bg); }
+
+  .hero { padding: 64px 0 40px; text-align: center; }
+  .hero .badge {
+    display: inline-block; font-size: 12px; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin-bottom: 14px;
+  }
+  .hero h1 { font-size: clamp(30px, 5vw, 48px); line-height: 1.15; margin: 0 0 16px; }
+  .hero p.sub { color: var(--muted); font-size: 16px; max-width: 520px; margin: 0 auto; }
+
+  section { padding: 40px 0; }
+  .section-title { font-size: 26px; margin: 0 0 28px; text-align: center; }
+
+  .books {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  .book-card {
+    background: var(--card-bg); border: 1px solid var(--line); border-radius: 20px;
+    padding: 22px; display: flex; flex-direction: column; gap: 14px;
+  }
+  .book-cover {
+    width: 100%; aspect-ratio: 1/1; border-radius: 12px; overflow: hidden;
+    background: var(--cover-bg); display:flex; align-items:center; justify-content:center; padding:14px;
+    position: relative;
+  }
+  .book-cover img { max-width: 100%; max-height: 100%; width:auto; height:auto; object-fit: contain;
+    border-radius: 4px; box-shadow: 0 8px 22px rgba(0,0,0,.18); }
+  .book-cover.full { padding:0; }
+  .book-cover.full img { width:100%; height:100%; object-fit:cover; border-radius:0; box-shadow:none; }
+  .ribbon {
+    position:absolute; top:14px; left:-34px; transform:rotate(-45deg); background:var(--flag-red); color:#fff;
+    font:600 11px 'Inter',sans-serif; letter-spacing:.06em; text-transform:uppercase; padding:5px 40px;
+  }
+  .buy-btn.disabled { background: transparent; color: var(--muted); border:1px dashed var(--line); pointer-events:none; }
+  .book-card h3 { margin: 0; font-size: 19px; line-height: 1.3; }
+  .book-card .teaser { font-size: 14px; color: var(--muted); line-height: 1.5; flex-grow: 1; }
+  .book-meta { display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: var(--muted); }
+  .price { font-weight: 600; color: var(--ink); font-size: 15px; }
+  .buy-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--ink); color: var(--bg); text-decoration: none;
+    padding: 12px 18px; border-radius: 999px; font-size: 14px; font-weight: 600;
+    transition: opacity .15s;
+  }
+  .buy-btn:hover { opacity: .85; }
+
+  .coming-soon {
+    border: 1px dashed var(--line); border-radius: 20px; padding: 22px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; color: var(--muted); font-size: 14px; gap: 6px; min-height: 200px;
+  }
+
+  .how { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 20px; }
+  .how .step { text-align: center; padding: 10px; }
+  .how .n { font-family: 'Fraunces', serif; font-size: 28px; color: var(--accent); margin-bottom: 8px; }
+  .how h4 { margin: 0 0 6px; font-size: 15px; }
+  .how p { margin: 0; font-size: 13px; color: var(--muted); }
+
+  .about { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: start; }
+  .about p { font-size: 15px; line-height: 1.7; color: var(--muted); }
+  .about-quote {
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 18px;
+    border-left: 3px solid var(--accent); padding-left: 16px; margin: 20px 0; color: var(--ink);
+  }
+
+  .newsletter {
+    background: var(--card-bg); border: 1px solid var(--line); border-radius: 20px;
+    padding: 28px; text-align: center;
+  }
+  .newsletter h3 { margin: 0 0 8px; font-size: 20px; }
+  .newsletter p { margin: 0 0 18px; font-size: 13px; color: var(--muted); }
+  .newsletter form { display: flex; gap: 10px; max-width: 380px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+  .newsletter input {
+    flex: 1; min-width: 180px; padding: 12px 16px; border-radius: 999px;
+    border: 1px solid var(--line); background: transparent; color: var(--ink); font-size: 14px;
+  }
+  .newsletter .demo-note { margin-top: 12px; font-size: 11px; color: var(--muted); }
+
+  footer { border-top: 1px solid var(--line); padding: 32px 0; }
+  footer .wrap { display: flex; flex-direction: column; gap: 8px; font-size: 12px; color: var(--muted); text-align: center; }
+  footer .made { font-weight: 600; color: var(--ink); }
+  .flag-it {
+    display: inline-flex; vertical-align: middle; border-radius: 3px; overflow: hidden;
+    box-shadow: 0 0 0 1px var(--line);
+  }
+
+
+  /* ---- Anteprima pagine interne ---- */
+  .preview { display:flex; flex-direction:column; gap:8px; }
+  .preview-label { font-size:12px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; color:var(--accent); }
+  .preview-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+  .preview-strip.three { grid-template-columns:repeat(3,1fr); }
+  .pv-thumb {
+    aspect-ratio:3/4; border:1px solid var(--line); border-radius:8px; cursor:zoom-in;
+    background-color:#fff; background-size:cover; background-position:center top; padding:0;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .pv-thumb.sq { aspect-ratio:1/1; background-position:center; }
+  .pv-thumb:hover, .pv-thumb:focus-visible { transform:translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.12); outline:none; }
+  .pv-open {
+    background:transparent; border:1px solid var(--line); color:var(--ink); border-radius:999px;
+    padding:10px 16px; font:600 13px 'Inter',sans-serif; cursor:pointer;
+  }
+  .pv-open:hover { border-color:var(--accent); }
+  .preview[hidden] { display:none; }
+  .preview, .lightbox { -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
+
+  .lightbox {
+    position:fixed; inset:0; z-index:200; display:none; align-items:center; justify-content:center;
+    background:rgba(10,18,15,.92); padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0);
+  }
+  .lightbox.open { display:flex; }
+  .lb-stage {
+    width:min(92vw,760px); height:min(82vh,980px);
+    background-size:contain; background-repeat:no-repeat; background-position:center;
+  }
+  .lb-btn {
+    position:absolute; background:rgba(255,255,255,.12); color:#fff; border:none; cursor:pointer;
+    width:46px; height:46px; border-radius:50%; font-size:22px; line-height:46px; text-align:center;
+  }
+  .lb-btn:hover { background:rgba(255,255,255,.25); }
+  .lb-prev { left:14px; top:50%; transform:translateY(-50%); }
+  .lb-next { right:14px; top:50%; transform:translateY(-50%); }
+  .lb-close { right:14px; top:calc(14px + env(safe-area-inset-top,0px)); }
+  .lb-info {
+    position:absolute; bottom:calc(16px + env(safe-area-inset-bottom,0px)); left:0; right:0;
+    text-align:center; color:rgba(255,255,255,.8); font-size:13px; padding:0 70px;
+  }
+  @media (max-width:600px) {
+    .lb-prev, .lb-next { top:auto; bottom:calc(52px + env(safe-area-inset-bottom,0px)); transform:none; }
+    .lb-stage { height:74vh; }
+  }
+
+  /* Lingua: inglese di default, italiano opzionale */
+  body:not(.lang-it) [data-lang="it"] { display: none !important; }
+  body.lang-it [data-lang="en"] { display: none !important; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="tricolore" aria-hidden="true"></div>
+  <div class="wrap topbar">
+    <div class="brand serif" style="display:flex;align-items:center;gap:10px;">
+      <img src="img/logo-vs.png" alt="VS monogram — Sal Giuliano" style="height:34px;width:auto;display:block;">
+      Sal Giuliano
+      <svg class="flag-it" width="22" height="15" viewBox="0 0 3 2" aria-label="Italia">
+        <rect width="1" height="2" x="0" fill="#009246"/>
+        <rect width="1" height="2" x="1" fill="#F1F2F1"/>
+        <rect width="1" height="2" x="2" fill="#CE2B37"/>
+      </svg>
+    </div>
+    <div class="langtoggle">
+      <button id="btn-en" class="active" onclick="setLang('en')" aria-label="English">EN</button>
+      <button id="btn-it" onclick="setLang('it')" aria-label="Italiano">IT</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="badge" data-lang="en">Benvenuti · Written in Catania, Sicily</div>
+    <div class="badge" data-lang="it">Benvenuti · Scritti a Catania, in Sicilia</div>
+    <h1 data-lang="en">Stories born<br>under Mount Etna.</h1>
+    <h1 data-lang="it">Storie nate<br>ai piedi dell'Etna.</h1>
+    <p class="sub" data-lang="en">Picture books, puzzle books and practical notebooks, each with a little Italian soul. Take a look inside, then find them on Amazon, worldwide.</p>
+    <p class="sub" data-lang="it">Albi illustrati, libri di enigmi e quaderni pratici, ognuno con un po' di anima italiana. Sfogliali qui, poi li trovi su Amazon, in tutto il mondo.</p>
+  </div>
+</section>
+
+<section id="libri">
+  <div class="wrap">
+    <span class="eyebrow" data-lang="en">i miei libri</span>
+    <h2 class="section-title serif" data-lang="en">My books</h2>
+    <h2 class="section-title serif" data-lang="it">I miei libri</h2>
+    <div class="books">
+
+      <div class="book-card">
+        <div class="book-cover full"><img src="img/cover-brontolo.jpg" alt="Brontolo the Etna Dragon — The Great Sneeze Day, book cover" loading="lazy"></div>
+        <h3 data-lang="it">Brontolo del Vulcano Etna — Il Giorno dello Starnuto</h3>
+        <h3 data-lang="en">Brontolo the Etna Dragon — The Great Sneeze Day</h3>
+        <p class="teaser" data-lang="it">Nino ha sette anni e un amico speciale sull'Etna: Brontolo, un drago gentile dalle scaglie rosso rubino. Ma oggi è il Giorno dello Starnuto — e quando Brontolo starnutisce, sull'Etna succede sempre qualcosa di buffo. Una storia tenera per ridere insieme, dai 3 ai 7 anni. Il libro è in inglese.</p>
+        <p class="teaser" data-lang="en">Nino is seven, and he has a special friend on Mount Etna: Brontolo, a gentle dragon with ruby-red scales. But today is the Great Sneeze Day — and when Brontolo sneezes, something funny always happens on the volcano. A warm read-aloud story for ages 3 to 7.</p>
+        <div class="preview" data-book="brontolo" data-count="4" data-title-it="Brontolo del Vulcano Etna" data-title-en="Brontolo the Etna Dragon">
+          <div class="preview-label"><span data-lang="it">Sfoglia l'anteprima</span><span data-lang="en">Look inside</span></div>
+          <div class="preview-strip">
+            <button type="button" class="pv-thumb sq" style="background-image:url('anteprime/brontolo-1.jpg')" data-book="brontolo" data-i="0" aria-label="Preview page 1"></button>
+            <button type="button" class="pv-thumb sq" style="background-image:url('anteprime/brontolo-2.jpg')" data-book="brontolo" data-i="1" aria-label="Preview page 2"></button>
+            <button type="button" class="pv-thumb sq" style="background-image:url('anteprime/brontolo-3.jpg')" data-book="brontolo" data-i="2" aria-label="Preview page 3"></button>
+            <button type="button" class="pv-thumb sq" style="background-image:url('anteprime/brontolo-4.jpg')" data-book="brontolo" data-i="3" aria-label="Preview page 4"></button>
+          </div>
+        </div>
+        <div class="book-meta">
+          <span data-lang="en">Hardcover, full color</span>
+          <span data-lang="it">Copertina rigida a colori</span>
+          <span class="price">$10.99</span>
+        </div>
+        <a class="buy-btn" href="https://www.amazon.com/dp/B0HHRZRNMP" target="_blank" rel="noopener noreferrer">
+          <span data-lang="en">Buy on Amazon</span>
+          <span data-lang="it">Acquista su Amazon</span>
+          <span aria-hidden="true">&#8594;</span>
+        </a>
+      </div>
+
+      <div class="book-card">
+        <div class="book-cover"><img src="img/cover-password-book.jpg" alt="Password Book for Seniors, book cover" loading="lazy"></div>
+        <h3 data-lang="it">Password Book for Seniors</h3>
+        <h3 data-lang="en">Password Book for Seniors</h3>
+        <p class="teaser" data-lang="it">Un organizer a caratteri grandi per tenere al sicuro indirizzi dei siti, username e password — tutto scritto chiaro su carta, senza nessuna app da imparare. Pensato per chi preferisce un quaderno a una password dimenticata. Il libro è in inglese.</p>
+        <p class="teaser" data-lang="en">A large-print organizer to keep website addresses, usernames and passwords safe — all on paper, no app to learn. Made for anyone who trusts a notebook more than a forgotten password.</p>
+        <div class="preview" data-book="password-book" data-count="4" data-title-it="Password Book for Seniors" data-title-en="Password Book for Seniors">
+          <div class="preview-label"><span data-lang="it">Sfoglia l'anteprima</span><span data-lang="en">Look inside</span></div>
+          <div class="preview-strip">
+            <button type="button" class="pv-thumb" style="background-image:url('anteprime/password-book-1.jpg')" data-book="password-book" data-i="0" aria-label="Preview page 1"></button>
+            <button type="button" class="pv-thumb" style="background-image:url('anteprime/password-book-2.jpg')" data-book="password-book" data-i="1" aria-label="Preview page 2"></button>
+            <button type="button" class="pv-thumb" style="background-image:url('anteprime/password-book-3.jpg')" data-book="password-book" data-i="2" aria-label="Preview page 3"></button>
+            <button type="button" class="pv-thumb" style="background-image:url('anteprime/password-book-4.jpg')" data-book="password-book" data-i="3" aria-label="Preview page 4"></button>
+          </div>
+        </div>
+        <div class="book-meta">
+          <span data-lang="en">Paperback, large print</span>
+          <span data-lang="it">Copertina flessibile, caratteri grandi</span>
+          <span class="price">$9.99</span>
+        </div>
+        <a class="buy-btn" href="https://www.amazon.com/dp/B0HKZ8WVY9" target="_blank" rel="noopener noreferrer">
+          <span data-lang="en">Buy on Amazon</span>
+          <span data-lang="it">Acquista su Amazon</span>
+          <span aria-hidden="true">&#8594;</span>
+        </a>
+      </div>
+
+      <div class="book-card">
+        <div class="book-cover"><img src="img/cover-murder-in-sicily.jpg" alt="Murder in Sicily — large print word search mystery puzzle book, cover" loading="lazy"><span class="ribbon" data-lang="en">Coming soon</span><span class="ribbon" data-lang="it">In arrivo</span></div>
+        <h3 data-lang="en">Murder in Sicily — Volume 1</h3>
+        <h3 data-lang="it">Murder in Sicily — Volume 1</h3>
+        <p class="teaser" data-lang="en">Forty murders along the Sicilian coast, and forty word search grids hiding the six suspects of each case. Study their habits and alibis, follow five fair-play clues, and name the killer before you check the solution. Large print, 8.5 x 11 in.</p>
+        <p class="teaser" data-lang="it">Quaranta delitti lungo la costa siciliana e quaranta griglie di parole nascoste con i sei sospettati di ogni caso. Studia abitudini e alibi, segui cinque indizi leali e smaschera l'assassino prima di guardare la soluzione. Caratteri grandi, formato 21,6 x 27,9 cm. Il libro è in inglese.</p>
+        <div class="preview" data-book="murder-in-sicily" data-count="3" data-title-it="Murder in Sicily" data-title-en="Murder in Sicily">
+          <div class="preview-label"><span data-lang="it">Sfoglia l'anteprima</span><span data-lang="en">Look inside</span></div>
+          <div class="preview-strip three">
+            <button type="button" class="pv-thumb" style="background-image:url('anteprime/murder-in-sicily-1.jpg')" data-book="murder-in-sicily" data-i="0" aria-label="Preview page 1"></button>
+            <button type="button" class="pv-thumb" style="background-image:url('anteprime/murder-in-sicily-2.jpg')" data-book="murder-in-sicily" data-i="1" aria-label="Preview page 2"></button>
+            <button type="button" class="pv-thumb" style="background-image:url('anteprime/murder-in-sicily-3.jpg')" data-book="murder-in-sicily" data-i="2" aria-label="Preview page 3"></button>
+          </div>
+        </div>
+        <div class="book-meta">
+          <span data-lang="en">Paperback, large print</span>
+          <span data-lang="it">Copertina flessibile, caratteri grandi</span>
+        </div>
+        <span class="buy-btn disabled">
+          <span data-lang="en">Coming soon to Amazon</span>
+          <span data-lang="it">Presto su Amazon</span>
+        </span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="come-funziona">
+  <div class="wrap">
+    <span class="eyebrow" data-lang="en">come funziona</span>
+    <h2 class="section-title serif" data-lang="en">How it works</h2>
+    <h2 class="section-title serif" data-lang="it">Come funziona</h2>
+    <div class="how">
+      <div class="step">
+        <div class="n">01</div>
+        <h4 data-lang="it">Guarda l'assaggio</h4>
+        <h4 data-lang="en">Take a look</h4>
+        <p data-lang="it">Copertina, trama e qualche pagina interna, qui sopra.</p>
+        <p data-lang="en">Cover, story and a few inside pages, right above.</p>
+      </div>
+      <div class="step">
+        <div class="n">02</div>
+        <h4 data-lang="it">Vai su Amazon</h4>
+        <h4 data-lang="en">Go to Amazon</h4>
+        <p data-lang="it">Un click e sei sulla pagina del libro.</p>
+        <p data-lang="en">One click to the book's page.</p>
+      </div>
+      <div class="step">
+        <div class="n">03</div>
+        <h4 data-lang="it">Amazon fa il resto</h4>
+        <h4 data-lang="en">Amazon does the rest</h4>
+        <p data-lang="it">Pagamento sicuro, stampa e spedizione gestiti da Amazon.</p>
+        <p data-lang="en">Secure payment, print and shipping handled by Amazon.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="chi-sono">
+  <div class="wrap about">
+    <div><span class="eyebrow" data-lang="en">chi sono</span>
+    <h2 class="section-title serif" data-lang="en">About me</h2>
+    <h2 class="section-title serif" data-lang="it">Chi sono</h2></div>
+    <div>
+      <p data-lang="it">Sono Sal Giuliano, catanese doc. Scrivo da quando avevo un quaderno a quadretti e una Bic blu in tasca, tra un caffè corto al bar di piazza e il vespro che scende sull'Etna.</p>
+      <p data-lang="it">Di mestiere racconto storie — per bambini e non solo. Ogni libro nasce qui, tra la pietra lavica e il mare, e da qui arriva dritto su Amazon, ovunque tu sia.</p>
+      <p data-lang="en">Ciao! I'm Sal Giuliano, born and raised in Catania, Sicily. I've been writing since the days of a squared school notebook and a blue Bic in my pocket, somewhere between an espresso at the piazza bar and the evening settling over Mount Etna.</p>
+      <p data-lang="en">I tell stories for a living, for kids and for grown-ups. Every book begins here, between black lava stone and the blue Mediterranean, and travels from Sicily straight to Amazon, wherever you are.</p>
+      <div class="about-quote" data-lang="it">&ldquo;Se un libro ti trattiene un'ora in più la sera, ha già fatto il suo lavoro.&rdquo;</div>
+      <div class="about-quote" data-lang="en">&ldquo;If a book keeps you up an hour longer at night, it has already done its job.&rdquo;<br><span style="font-size:14px;color:var(--muted);font-style:normal">— Sal, from Catania with love</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="newsletter">
+  <div class="wrap">
+    <div class="newsletter">
+      <span class="eyebrow" data-lang="en">restiamo in contatto</span>
+      <h3 class="serif" data-lang="en">Letters from Sicily</h3>
+      <h3 class="serif" data-lang="it">Lettere dalla Sicilia</h3>
+      <p data-lang="en">A short note when a new book is out. No spam, promesso.</p>
+      <p data-lang="it">Un breve avviso quando esce un nuovo libro. Niente spam, promesso.</p>
+      <form onsubmit="return handleSubscribe(event)">
+        <input type="email" placeholder="Your email" data-lang="en" id="email-en" aria-label="Your email">
+        <input type="email" placeholder="La tua email" data-lang="it" id="email-it" aria-label="La tua email">
+        <button class="buy-btn" type="submit">
+          <span data-lang="en">Subscribe</span>
+          <span data-lang="it">Iscriviti</span>
+        </button>
+      </form>
+      <div class="demo-note" data-lang="it">Modulo demo: da collegare a un servizio email vero prima del lancio pubblico.</div>
+      <div class="demo-note" data-lang="en">Demo form: connect a real email service before public launch.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="made" style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;">
+      salgiuliano.com &copy; 2026 &middot; Made in Italy
+      <svg class="flag-it" width="18" height="12" viewBox="0 0 3 2" aria-label="Italia">
+        <rect width="1" height="2" x="0" fill="#009246"/>
+        <rect width="1" height="2" x="1" fill="#F1F2F1"/>
+        <rect width="1" height="2" x="2" fill="#CE2B37"/>
+      </svg>
+      &middot; Catania, Sicily
+    </div>
+    <div class="serif" style="font-style:italic;font-size:14px;color:var(--accent)" data-lang="en">Grazie for stopping by. Buona lettura!</div>
+    <div class="serif" style="font-style:italic;font-size:14px;color:var(--accent)" data-lang="it">Grazie per la visita. Buona lettura!</div>
+    <div data-lang="it">I libri sono venduti e spediti direttamente da Amazon. Contatti: <a href="mailto:ciao@salgiuliano.com">ciao@salgiuliano.com</a></div>
+    <div data-lang="en">Books are sold and shipped directly by Amazon. Contact: <a href="mailto:ciao@salgiuliano.com">ciao@salgiuliano.com</a></div>
+    <div data-lang="it">La tua email per la newsletter è usata solo per inviarti aggiornamenti sui libri, mai ceduta a terzi.</div>
+    <div data-lang="en">Your newsletter email is only used to send you book updates, never shared with third parties.</div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Anteprima">
+  <div class="lb-stage" id="lb-stage"></div>
+  <button type="button" class="lb-btn lb-close" id="lb-close" aria-label="Chiudi">&#10005;</button>
+  <button type="button" class="lb-btn lb-prev" id="lb-prev" aria-label="Precedente">&#8249;</button>
+  <button type="button" class="lb-btn lb-next" id="lb-next" aria-label="Successiva">&#8250;</button>
+  <div class="lb-info" id="lb-info"></div>
+</div>
+
+<script>
+function setLang(lang) {
+  var it = lang === 'it';
+  document.body.classList.toggle('lang-it', it);
+  document.documentElement.lang = it ? 'it' : 'en';
+  document.getElementById('btn-it').classList.toggle('active', it);
+  document.getElementById('btn-en').classList.toggle('active', !it);
+  document.getElementById('email-it').required = it;
+  document.getElementById('email-en').required = !it;
+  try { localStorage.setItem('sg-lang', lang); } catch (e) {}
+}
+/* Inglese di default; l'italiano resta solo se il visitatore l'ha scelto */
+(function(){ var l = 'en'; try { l = localStorage.getItem('sg-lang') || 'en'; } catch (e) {} setLang(l); })();
+function handleSubscribe(e) {
+  e.preventDefault();
+  var btn = e.target.querySelector('.buy-btn');
+  var lang = document.body.classList.contains('lang-it') ? 'it' : 'en';
+  btn.textContent = lang === 'en' ? 'Thank you!' : 'Grazie!';
+  return false;
+}
+/* ---- Anteprima: visualizzatore ---- */
+(function(){
+  var lb=document.getElementById('lightbox'), stage=document.getElementById('lb-stage'),
+      info=document.getElementById('lb-info'), cur={book:null,i:0,n:0,t:''};
+  function isEn(){ return !document.body.classList.contains('lang-it'); }
+  function show(){
+    stage.style.backgroundImage="url('anteprime/"+cur.book+"-"+(cur.i+1)+".jpg')";
+    info.textContent=cur.t+' — '+(isEn()?'page ':'pagina ')+(cur.i+1)+' / '+cur.n+
+      (isEn()?' · Full book on Amazon':' · Il libro completo su Amazon');
+  }
+  function open(book,i){
+    var p=document.querySelector('.preview[data-book="'+book+'"]');
+    cur.book=book; cur.i=i; cur.n=+p.dataset.count;
+    cur.t=isEn()?p.dataset.titleEn:p.dataset.titleIt;
+    show(); lb.classList.add('open'); document.body.style.overflow='hidden';
+  }
+  function close(){ lb.classList.remove('open'); document.body.style.overflow=''; }
+  function go(d){ cur.i=(cur.i+d+cur.n)%cur.n; show(); }
+  document.querySelectorAll('[data-book][data-i]').forEach(function(b){
+    b.addEventListener('click',function(){ open(b.dataset.book,+b.dataset.i); });
+  });
+  document.getElementById('lb-close').onclick=close;
+  document.getElementById('lb-prev').onclick=function(){go(-1);};
+  document.getElementById('lb-next').onclick=function(){go(1);};
+  lb.addEventListener('click',function(e){ if(e.target===lb) close(); });
+  document.addEventListener('keydown',function(e){
+    if(!lb.classList.contains('open')) return;
+    if(e.key==='Escape') close(); else if(e.key==='ArrowLeft') go(-1); else if(e.key==='ArrowRight') go(1);
+  });
+  var x0=null;
+  stage.addEventListener('touchstart',function(e){ x0=e.touches[0].clientX; },{passive:true});
+  stage.addEventListener('touchend',function(e){
+    if(x0===null) return; var dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>40) go(dx<0?1:-1); x0=null;
+  });
+  /* Scoraggia il salvataggio: niente menu tasto destro e trascinamento sulle anteprime */
+  ['contextmenu','dragstart'].forEach(function(ev){
+    document.addEventListener(ev,function(e){
+      if(e.target.closest && e.target.closest('.preview, .lightbox')) e.preventDefault();
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
