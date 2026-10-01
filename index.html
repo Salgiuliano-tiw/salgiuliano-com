@@ -228,6 +228,19 @@
     .lb-stage { height:74vh; }
   }
 
+
+  /* ---- Cookie banner ---- */
+  .cookie-banner { position:fixed; left:0; right:0; bottom:0; z-index:300; background:var(--card-bg);
+    border-top:1px solid var(--line); box-shadow:0 -6px 24px rgba(0,0,0,.12);
+    padding:16px 20px calc(16px + env(safe-area-inset-bottom,0px)); }
+  .cookie-banner[hidden] { display:none; }
+  .cookie-inner { max-width:1040px; margin:0 auto; display:flex; gap:16px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+  .cookie-inner p { margin:0; font-size:13px; line-height:1.5; color:var(--muted); flex:1; min-width:240px; }
+  .cookie-actions { display:flex; gap:10px; }
+  .cookie-actions button { font:600 13px 'Inter',sans-serif; padding:10px 18px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--line); background:transparent; color:var(--ink); }
+  .cookie-actions button.ck-accept { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+
   /* Lingua: inglese di default, italiano opzionale */
   body:not(.lang-it) [data-lang="it"] { display: none !important; }
   body.lang-it [data-lang="en"] { display: none !important; }
@@ -288,8 +301,8 @@
           </div>
         </div>
         <div class="book-meta">
-          <span data-lang="en">Hardcover, full color</span>
-          <span data-lang="it">Copertina rigida a colori</span>
+          <span data-lang="en">Paperback, full color</span>
+          <span data-lang="it">Copertina flessibile a colori</span>
           <span class="price">$10.99</span>
         </div>
         <a class="buy-btn" href="https://www.amazon.com/dp/B0HHRZRNMP" target="_blank" rel="noopener noreferrer">
@@ -317,7 +330,7 @@
         <div class="book-meta">
           <span data-lang="en">Paperback, large print</span>
           <span data-lang="it">Copertina flessibile, caratteri grandi</span>
-          <span class="price">$9.99</span>
+          <span class="price">$8.99</span>
         </div>
         <a class="buy-btn" href="https://www.amazon.com/dp/B0HKZ8WVY9" target="_blank" rel="noopener noreferrer">
           <span data-lang="en">Buy on Amazon</span>
@@ -449,6 +462,8 @@
     <div data-lang="en">Books are sold and shipped directly by Amazon. Contact: <a href="mailto:ciao@salgiuliano.com">ciao@salgiuliano.com</a></div>
     <div data-lang="it">La tua email per la newsletter è usata solo per inviarti aggiornamenti sui libri, mai ceduta a terzi.</div>
     <div data-lang="en">Your newsletter email is only used to send you book updates, never shared with third parties.</div>
+    <div data-lang="it">Statistiche di visita anonime con Google Analytics, solo con il tuo consenso. <a href="#" onclick="try{localStorage.removeItem('sg-consent')}catch(e){};location.reload();return false;">Cambia scelta cookie</a></div>
+    <div data-lang="en">Anonymous visit statistics via Google Analytics, only with your consent. <a href="#" onclick="try{localStorage.removeItem('sg-consent')}catch(e){};location.reload();return false;">Change cookie choice</a></div>
   </div>
 </footer>
 
@@ -528,6 +543,49 @@ function handleSubscribe(e) {
       if(e.target.closest && e.target.closest('.preview, .lightbox')) e.preventDefault();
     });
   });
+})();
+</script>
+
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-label="Cookie" hidden>
+  <div class="cookie-inner">
+    <p data-lang="en">We use Google Analytics (anonymous visit statistics) to understand how many people visit this site and which books they click. It is only switched on if you accept. Nothing is sold or shared for advertising.</p>
+    <p data-lang="it">Usiamo Google Analytics (statistiche anonime di visita) per capire quante persone visitano il sito e su quali libri cliccano. Si attiva solo se accetti. Niente viene venduto o condiviso per pubblicità.</p>
+    <div class="cookie-actions">
+      <button type="button" id="ck-decline"><span data-lang="en">Decline</span><span data-lang="it">Rifiuta</span></button>
+      <button type="button" id="ck-accept" class="ck-accept"><span data-lang="en">Accept</span><span data-lang="it">Accetta</span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---- Google Analytics 4: si carica SOLO dopo il consenso ---- */
+(function(){
+  var GA_ID = 'G-C5RMDNM6G6';
+  var banner = document.getElementById('cookie-banner');
+  function getC(){ try { return localStorage.getItem('sg-consent'); } catch(e){ return null; } }
+  function setC(v){ try { localStorage.setItem('sg-consent', v); } catch(e){} }
+  function loadGA(){
+    if (!GA_ID || GA_ID.indexOf('XXXX') !== -1 || window.__gaLoaded) return;
+    window.__gaLoaded = true;
+    var sc = document.createElement('script');
+    sc.async = true; sc.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(sc);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', GA_ID, { anonymize_ip: true });
+    /* Conta i clic sui pulsanti "Buy on Amazon" */
+    document.querySelectorAll('a.buy-btn').forEach(function(a){
+      a.addEventListener('click', function(){
+        var card = a.closest('.book-card'), h = card && card.querySelector('h3[data-lang="en"]');
+        gtag('event', 'click_amazon', { book: h ? h.textContent.trim() : 'unknown', link_url: a.href });
+      });
+    });
+  }
+  var c = getC();
+  if (c === 'yes') loadGA(); else if (c !== 'no') banner.hidden = false;
+  document.getElementById('ck-accept').onclick = function(){ setC('yes'); banner.hidden = true; loadGA(); };
+  document.getElementById('ck-decline').onclick = function(){ setC('no'); banner.hidden = true; };
 })();
 </script>
 
