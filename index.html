@@ -249,6 +249,8 @@
 
   .vid-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; background:transparent; color:var(--ink); border:1.5px solid var(--ink); padding:10px 18px; border-radius:999px; font:600 14px 'Inter',sans-serif; cursor:pointer; }
   .vid-btn:hover { opacity:.7; }
+  .free-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; background:transparent; color:var(--ink); border:1.5px solid var(--ink); padding:10px 18px; border-radius:999px; font:600 14px 'Inter',sans-serif; text-decoration:none; text-align:center; }
+  .free-btn:hover { opacity:.7; }
   .vid-modal { position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index:1000; padding:16px; }
   .vid-modal.open { display:flex; }
   .vid-modal video { max-height:88vh; max-width:100%; border-radius:12px; background:#000; }
@@ -437,7 +439,7 @@
         <p class="isbn-line"><span data-lang="en">Fastest way to find it: search this ISBN on Amazon</span><span data-lang="it">Il modo più veloce per trovarlo: cerca questo ISBN su Amazon</span> <strong class="isbn-code">9798161861257</strong></p>
       </div>
 
-      <div class="book-card">
+      <div class="book-card" id="free-pages">
         <div class="book-cover"><img src="img/cover-christmas-coloring.jpg" alt="Large Print Christmas Coloring Book for Seniors, book cover" loading="lazy"></div>
         <h3 data-lang="it">Large Print Christmas Coloring Book for Seniors</h3>
         <h3 data-lang="en">Large Print Christmas Coloring Book for Seniors</h3>
@@ -462,6 +464,7 @@
           <span aria-hidden="true">&#8594;</span>
         </a>
         <p class="isbn-line"><span data-lang="en">Fastest way to find it: search this ISBN on Amazon</span><span data-lang="it">Il modo più veloce per trovarlo: cerca questo ISBN su Amazon</span> <strong class="isbn-code">9798161867365</strong></p>
+        <a class="free-btn" href="free/free-christmas-coloring-pages-seniors.pdf" target="_blank" rel="noopener"><span aria-hidden="true">&#127873;</span> <span data-lang="en">Free sample: 3 pages to print (PDF)</span><span data-lang="it">Regalo: 3 pagine da stampare (PDF)</span></a>
       </div>
 
       <div class="book-card">
@@ -734,6 +737,12 @@ function handleSubscribe(e) {
       a.addEventListener('click', function(){
         var card = a.closest('.book-card'), h = card && card.querySelector('h3[data-lang="en"]');
         gtag('event', 'click_amazon', { book: h ? h.textContent.trim() : 'unknown', link_url: a.href });
+      });
+    });
+    /* Conta i download delle pagine gratis */
+    document.querySelectorAll('a.free-btn').forEach(function(a){
+      a.addEventListener('click', function(){
+        gtag('event', 'download_free_pages', { book: 'Large Print Christmas Coloring Book for Seniors', file_name: 'free-christmas-coloring-pages-seniors.pdf' });
       });
     });
   }
